@@ -60,13 +60,18 @@ class SankeyChart extends Component<ChartProps, {}> {
               linkOpacity={0.5}
               linkHoverOthersOpacity={0.1}
               enableLinkGradient={true}
-              labelPosition="outside"
-              labelOrientation="vertical"
+              // labelPosition="outside"
+              // labelOrientation="vertical"
               labelPadding={16}
-              labelTextColor="inherit:darker(1)"
+              labelTextColor="inherit:darker(4)"
               // animate={true}
               // motionStiffness={140}
               // motionDamping={13}
+              linkTooltip={(node: any) => (
+                <span>
+                  {node.source.label} -- {node.target.label} {node.value}%
+                </span>
+              )}
               legends={[
                 {
                   anchor: "bottom-right",
@@ -78,6 +83,7 @@ class SankeyChart extends Component<ChartProps, {}> {
                   itemsSpacing: 2,
                   itemTextColor: "#999",
                   symbolSize: 14,
+
                   effects: [
                     {
                       on: "hover",
