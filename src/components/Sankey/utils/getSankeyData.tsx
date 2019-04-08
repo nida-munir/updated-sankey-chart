@@ -1,16 +1,23 @@
 export function getSankeyData(response: any) {
+  // get unique values in each column
   const genderValues = uniqueValuesOfColumn(response, "sex");
   const bloodSugarValues = uniqueValuesOfColumn(response, "fbs");
   const chestPainValues = uniqueValuesOfColumn(response, "cp");
-  const nodeValues = [
+
+  const uniqueValuesOfAllColumns = [
     ...genderValues.values,
     ...bloodSugarValues.values,
     ...chestPainValues.values
   ];
-  const nodes = calculateNodes(nodeValues);
-  // provide source, target, and data to calculate percentage
+  // get nodes
+  const nodes = calculateNodes(uniqueValuesOfAllColumns);
+
+  // get links
+  // provide source, target, and data (to calculate percentage)
   const links1 = calculateLinks(genderValues, bloodSugarValues, response);
   const links2 = calculateLinks(bloodSugarValues, chestPainValues, response);
+
+  // combine nodes and links and return them
   const data = {
     nodes,
     links: [...links1, ...links2]
@@ -19,20 +26,21 @@ export function getSankeyData(response: any) {
   return data;
 }
 
-function uniqueValuesOfColumn(input: any, query: string) {
-  const genderValues: any = { key: query, values: [] };
+function uniqueValuesOfColumn(input: any, key: string) {
   const values = input
-    .map((item: any) => item[query])
+    .map((item: any) => item[key])
     .filter(
       (value: any, index: any, self: any) => self.indexOf(value) === index
     );
-  genderValues.values = values;
-  return genderValues;
+  // return object with column name and unique values in each columns
+  // key = column name
+  const uniqueValuesWithKeys: any = { key, values };
+
+  return uniqueValuesWithKeys;
 }
 
 function calculateLinks(src: any, tar: any, response: any) {
   const totalRecords = response.length;
-  console.log(totalRecords);
 
   const links: any = [];
   src.values.map((s: any) => {
@@ -53,9 +61,8 @@ function calculateLinks(src: any, tar: any, response: any) {
   return links;
   // console.log('Links', links);
 }
-function calculateNodes(values: any) {
+function calculateNodes(values: Array<string>) {
   const nodes: any = [];
-  values.map((v: any) => nodes.push({ id: v }));
-  // console.log('nodes', nodes);
+  values.map((nodeName: string) => nodes.push({ id: nodeName }));
   return nodes;
 }

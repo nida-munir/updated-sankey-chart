@@ -11,7 +11,7 @@ class SankeyChart extends Component<ChartProps, {}> {
     data: { nodes: [], links: [] }
   };
 
-  async componentDidUpdate(prevProps: ChartProps) {
+  componentDidUpdate(prevProps: ChartProps) {
     const { isLoading, data: fileData } = this.props;
     if (isLoading != prevProps.isLoading) {
       // when file loading is complete
@@ -22,7 +22,7 @@ class SankeyChart extends Component<ChartProps, {}> {
         const data = getSankeyData(transformedData);
         // update state
         this.setState({ data });
-        console.log("Transformed data values - ", transformedData);
+        // console.log("Transformed data values - ", transformedData);
         console.log("Sankey data with nodes and links ", data);
       }
     }
@@ -30,14 +30,13 @@ class SankeyChart extends Component<ChartProps, {}> {
 
   render() {
     const { data } = this.state;
-
     if (data.nodes.length > 0) {
       return (
         <React.Fragment>
           <h5>
             This sankey chart represents relationship between gender and blood
-            sugar level (high or low). and also the relationship between blood
-            sugar level and the type of chest pain.
+            sugar level (high or low) and the relationship between blood sugar
+            level and the type of chest pain.
           </h5>
 
           <div id="sankey-chart">
