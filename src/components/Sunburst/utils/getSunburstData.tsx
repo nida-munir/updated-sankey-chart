@@ -1,4 +1,4 @@
-export function transform(response: any) {
+export function getSunburstData(response: any) {
   const obj: any = {
     name: "nivo",
     children: []
@@ -118,6 +118,11 @@ function getExAnValues(input: any, query: string) {
     return acc;
   }, {});
   // console.log("result", result);
+  // convert to percentage here
+  // convert count to percentage
+  // Object.keys(result).map(function(key, index) {
+  //   result[key] = Math.round((result[key] / input.length) * 100);
+  // });
 
   return result;
 }
@@ -149,10 +154,10 @@ function getFbsType(input: any, name: string) {
     // console.log("exvlues", exValues);
     // rename 0,1 with yes or no
     const yes = Object.getOwnPropertyDescriptor(exValues, "0") || {};
-
     const no = Object.getOwnPropertyDescriptor(exValues, "1") || {};
-    Object.defineProperty(exValues, "yes", yes);
-    Object.defineProperty(exValues, "no", no);
+
+    Object.defineProperty(exValues, "exercise induced pain", yes);
+    Object.defineProperty(exValues, "pain without exercise", no);
     // console.log("exValues", exValues);
     delete exValues["0"];
     delete exValues["1"];

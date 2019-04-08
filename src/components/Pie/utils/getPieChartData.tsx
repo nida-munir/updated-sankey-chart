@@ -1,4 +1,4 @@
-export function transform(response: any, query = "cp") {
+export function getPieChartData(response: any, query = "cp") {
   const groupedData = getPercentage(response, query);
   return getData(groupedData);
 }

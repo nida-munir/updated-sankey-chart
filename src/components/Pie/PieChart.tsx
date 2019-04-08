@@ -4,7 +4,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 // src
 import { ResponsivePie } from "@nivo/pie";
-import { transform } from "./utils/getPieChartData";
+import { getPieChartData } from "./utils/getPieChartData";
 import { ChartProps } from "../../types/types";
 import { transformColumnValues } from "../Sankey/utils/transformData";
 
@@ -22,7 +22,7 @@ export class PieChart extends Component<ChartProps, {}> {
       if (!isLoading) {
         const columns = Object.keys(fileData[0]);
         const transformedData = transformColumnValues(fileData);
-        const data = transform(transformedData, query);
+        const data = getPieChartData(transformedData, query);
         this.setState({ data, columns });
       }
     }

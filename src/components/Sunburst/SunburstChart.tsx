@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // src
 import { ResponsiveSunburst } from "@nivo/sunburst";
 import { ChartProps } from "../../types/types";
-import { transform } from "./utils/getSunburstData";
+import { getSunburstData } from "./utils/getSunburstData";
 
 export class SunburstChart extends Component<ChartProps, {}> {
   state = {
@@ -13,7 +13,7 @@ export class SunburstChart extends Component<ChartProps, {}> {
     const { isLoading, data: fileData } = this.props;
     if (isLoading != prevProps.isLoading) {
       if (!isLoading) {
-        const data = transform(fileData);
+        const data = getSunburstData(fileData);
         console.log("Sunburst chart data - ", data);
         this.setState({ data });
       }
