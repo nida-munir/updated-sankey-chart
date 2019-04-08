@@ -1,5 +1,7 @@
 // lib
 import React, { Component } from "react";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 // src
 import { ResponsivePie } from "@nivo/pie";
 import { transform } from "./utils/getPieChartData";
@@ -11,7 +13,8 @@ export class PieChart extends Component<ChartProps, {}> {
   state = {
     data: [],
     query: "cp",
-    queryDescription: "Chest pain types"
+    queryDescription: "Chest pain types",
+    columns: []
   };
 
   async componentDidUpdate(prevProps: ChartProps, prevState: any) {
@@ -19,31 +22,41 @@ export class PieChart extends Component<ChartProps, {}> {
     const { query } = this.state;
     if (isLoading != prevProps.isLoading || query !== prevState.query) {
       if (!isLoading) {
+        const columns = Object.keys(fileData[0]);
+
         const transformedData = transformColumnValues(fileData);
         const data = transform(transformedData, query);
-        this.setState({ data });
+        this.setState({ data, columns });
       }
     }
   }
 
-  // updateQuery = (query: string, queryDescription: string) => {
-  //   this.setState({ query, queryDescription });
-  // };
+  updateQuery = (option: any) => {
+    console.log("SelectedS");
+    console.log("You selected ", option.label);
+    this.setState({ query: option.label });
+  };
+
   render() {
-    const { data, queryDescription } = this.state;
+    const { data, columns, query } = this.state;
     const { isLoading } = this.props;
+    const defaultOption = columns[0];
     if (isLoading) return <p>Loading</p>;
     else
       return (
         <React.Fragment>
-          <h5>
-            This pie chart shows four types of chest pains and the respective
-            no. of patients who have it
-          </h5>
-          {/* <PieAttributes updateQuery={this.updateQuery} /> */}
-          {/* <h5>{queryDescription}</h5> */}
-
-          <div id="pie-chart">
+          <div id="pie-dropdown" className="voffset1">
+            <span>Select an option to view data in pie chart.</span>
+            <Dropdown
+              options={columns}
+              onChange={this.updateQuery}
+              // value={defaultOption}
+              className="pie-attributes"
+              placeholder="Select an option"
+            />
+          </div>
+          <br />
+          <div id="pie-chart" className="voffset1">
             <ResponsivePie
               data={data}
               margin={{

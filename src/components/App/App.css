@@ -35,7 +35,7 @@
 }
 
 #sankey-chart {
-  width: 700px;
+  width: 600px;
   margin: auto;
 }
 #pie-attr a {
@@ -43,4 +43,26 @@
   margin-right: 20px;
   font-weight: 500;
   color: crimson;
+}
+#pie-dropdown {
+  position: relative;
+  /* min-height: 100px;
+  overflow: hidden; */
+}
+.pie-attributes {
+  width: 300px;
+  position: absolute;
+  right: 35px;
+  top: 0;
+}
+
+.voffset1 {
+  margin-top: 15px;
+}
+
+#pie-dropdown > span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: 5px;
 }
