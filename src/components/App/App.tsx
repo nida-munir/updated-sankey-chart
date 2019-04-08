@@ -27,8 +27,11 @@ class App extends Component {
         <div id="app">
           <div id="content">
             {/* <Pie /> */}
+            <h1>Nivo's Sankey Chart</h1>
             <SankeyChart isLoading={isLoading} data={fileData} />
+            <h1>Nivo's Pie Chart</h1>
             <PieChart isLoading={isLoading} data={fileData} />
+            <h1>Nivo's Sunburst Chart</h1>
             <SunburstChart isLoading={isLoading} data={fileData} />
           </div>
           <footer id="footer">

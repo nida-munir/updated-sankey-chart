@@ -6,14 +6,12 @@ import "react-dropdown/style.css";
 import { ResponsivePie } from "@nivo/pie";
 import { transform } from "./utils/getPieChartData";
 import { ChartProps } from "../../types/types";
-import { PieAttributes } from "./PieAttributes";
 import { transformColumnValues } from "../Sankey/utils/transformData";
 
 export class PieChart extends Component<ChartProps, {}> {
   state = {
     data: [],
     query: "cp",
-    queryDescription: "Chest pain types",
     columns: []
   };
 
@@ -23,7 +21,6 @@ export class PieChart extends Component<ChartProps, {}> {
     if (isLoading != prevProps.isLoading || query !== prevState.query) {
       if (!isLoading) {
         const columns = Object.keys(fileData[0]);
-
         const transformedData = transformColumnValues(fileData);
         const data = transform(transformedData, query);
         this.setState({ data, columns });
@@ -32,15 +29,15 @@ export class PieChart extends Component<ChartProps, {}> {
   }
 
   updateQuery = (option: any) => {
-    console.log("SelectedS");
-    console.log("You selected ", option.label);
-    this.setState({ query: option.label });
+    const { label: query } = option;
+    this.setState({ query });
   };
 
   render() {
-    const { data, columns, query } = this.state;
+    const { data, columns } = this.state;
     const { isLoading } = this.props;
-    const defaultOption = columns[0];
+    // should be 0
+    const defaultOption = columns[2];
     if (isLoading) return <p>Loading</p>;
     else
       return (
@@ -50,13 +47,13 @@ export class PieChart extends Component<ChartProps, {}> {
             <Dropdown
               options={columns}
               onChange={this.updateQuery}
-              // value={defaultOption}
+              value={defaultOption}
               className="pie-attributes"
               placeholder="Select an option"
             />
           </div>
           <br />
-          <div id="pie-chart" className="voffset1">
+          <div id="pie-chart" className="voffset2">
             <ResponsivePie
               data={data}
               margin={{
